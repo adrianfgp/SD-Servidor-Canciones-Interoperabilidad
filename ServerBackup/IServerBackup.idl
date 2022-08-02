@@ -1,0 +1,14 @@
+module corba_server_backup {
+  interface IControllerCopySecurity {
+    struct SongDTO {
+      long id;
+      string artist;
+      string title;
+      string type;
+      long sizeMB;
+      sequence<any> arrayBytes;
+    };
+
+    boolean saveCopySong(in SongDTO objSong);
+  };
+};
