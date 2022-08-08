@@ -1,14 +1,14 @@
 package server.controllers;
 
 import common.entities.NotifyDTO;
-import common.entities.SongDTO;
-import common.interfaces.IControllerCopySecurity;
 import common.interfaces.IControllerManageSong;
 import common.interfaces.ISongRepository;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import server.utilities.RegisterClient;
+import soap_server_backup.IControllerCopySecurity;
+import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
 
 /**
  *
@@ -27,7 +27,8 @@ public class ControllerManageSong extends UnicastRemoteObject implements IContro
     }
     
     public void getObjectRemoteServerBackup(String addressIp, int portNS) throws RemoteException {
-        this.objSongCopySecurity = (IControllerCopySecurity) RegisterClient.getObjectRemote(addressIp, portNS, "objServicioGestionCopiaCanciones");
+        String[] arrayDataLocationNS = {"-ORBInitialHost", addressIp, "-ORBInitialPort", ""+portNS };
+        this.objSongCopySecurity = (IControllerCopySecurity) RegisterClient.getObjRemote(arrayDataLocationNS, "objServicioGestionCopiaCanciones");
     }
     
     @Override

@@ -1,25 +1,22 @@
 package server.controllers;
 
-import common.entities.SongDTO;
-import common.interfaces.IControllerCopySecurity;
 import common.interfaces.ISongRepository;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+import soap_server_backup.IControllerCopySecurityPOA;
+import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
 
 /**
  *
  * @author jhonfer
  */
-public class ControllerCopySecurity extends UnicastRemoteObject implements IControllerCopySecurity {
+public class ControllerCopySecurity extends IControllerCopySecurityPOA {
     private final ISongRepository objCopySongs;
     
-    public ControllerCopySecurity(ISongRepository objCopySongs) throws RemoteException {
-        super();
+    public ControllerCopySecurity(ISongRepository objCopySongs) {
         this.objCopySongs = objCopySongs;
     }
     
     @Override
-    public boolean saveCopySong(SongDTO objSong) throws RemoteException {
+    public boolean saveCopySong(SongDTO objSong) {
         return this.objCopySongs.saveSong(objSong);
     }
 }

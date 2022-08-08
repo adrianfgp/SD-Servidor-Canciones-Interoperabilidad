@@ -1,12 +1,21 @@
 package server.utilities;
 
 import common.utilities.Console;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import org.omg.CORBA.ORB;
+import org.omg.CORBA.ORBPackage.InvalidName;
+import org.omg.CosNaming.NameComponent;
+import org.omg.CosNaming.NamingContextExt;
+import org.omg.CosNaming.NamingContextExtHelper;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+import org.omg.PortableServer.POA;
+import org.omg.PortableServer.POAHelper;
+import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
+import org.omg.PortableServer.POAPackage.ServantNotActive;
+import org.omg.PortableServer.POAPackage.WrongPolicy;
+import server.controllers.ControllerCopySecurity;
+import soap_server_backup.IControllerCopySecurity;
+import soap_server_backup.IControllerCopySecurityHelper;
 
 /**
  *
@@ -14,30 +23,27 @@ import java.rmi.registry.Registry;
  */
 public class RegisterServer {
     
-    public static void runNS(int numPortRMI) throws RemoteException {
-        try {
-            Registry register = LocateRegistry.getRegistry(numPortRMI);
-            String[] listRegister = register.list();
-            for (String idNS : listRegister) {
-                Console.writeJumpLine("ns : " + idNS, false);
-            }
-            Console.writeJumpLine("El rmiRegistry se ha obtenido y se encuentra escuchando en el puerto: " + numPortRMI, false);
-        } catch (RemoteException e) {
-            Console.writeJumpLine("El rmiRegistry no se localizo en el puerto: " + numPortRMI, false);
-            Registry register = LocateRegistry.createRegistry(numPortRMI);
-            Console.writeJumpLine("El rmiRegistry se ha creado en el puerto: " + numPortRMI, false);
-        }
-    }
+    public static void registerObjectRemoto(String[] vectorDatosNS, ControllerCopySecurity objRemoto, String idObjetoRemoto) throws ServantNotActive, WrongPolicy, org.omg.CORBA.ORBPackage.InvalidName, AdapterInactive, InvalidName, NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
+        // crea e inicia el ORB
+        ORB orb = ORB.init(vectorDatosNS, null);
+        POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
+        rootpoa.the_POAManager().activate();
 
-    public static void registerObjectRemote(Remote objectRemote, String addrIpNS, int numPortNS, String idObjectRemote) throws MalformedURLException {
-        String uriRegister = "rmi://" + addrIpNS + ":" + numPortNS + "/" + idObjectRemote;
-        try {
-            Naming.rebind(uriRegister, objectRemote);
-            Console.writeJumpLine("Se realizo el registro del objecto remoto en el ns ubicado en la direccion: " + addrIpNS + " y puerto " + numPortNS, false);
-        } catch (RemoteException e) {
-            Console.writeJumpLine("Error en el registro del objecto remote", false);
-        } catch (MalformedURLException e) {
-            Console.writeJumpLine("Error uri invalida...", false);
-        }
+        //*** se genera la referencia del servant
+        org.omg.CORBA.Object obj = rootpoa.servant_to_reference(objRemoto);
+        IControllerCopySecurity href = IControllerCopySecurityHelper.narrow(obj);
+
+        // se obtiene un link al name service
+        org.omg.CORBA.Object objref = orb.resolve_initial_references("NameService");
+        NamingContextExt ncref = NamingContextExtHelper.narrow(objref);
+
+        // *** se realiza el binding de la referencia del servant en el N_S ***            
+        NameComponent path[] = ncref.to_name(idObjetoRemoto);
+        ncref.rebind(path, href);
+
+        Console.writeJumpLine("El Servidor esta listo y esperando ...", false);
+
+        // esperan por las invocaciones desde los clientes
+        orb.run();
     }
 }

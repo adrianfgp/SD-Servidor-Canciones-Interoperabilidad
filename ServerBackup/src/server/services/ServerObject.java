@@ -14,16 +14,17 @@ public class ServerObject {
 
     public static void main(String[] args) throws RemoteException {
         int numPortRMIRegistry = 0;
-        String addressIpRMIRegistry = " ";
-        addressIpRMIRegistry = Console.read("Cual es la direccion ip donde se encuentra el rmiRegistry ?", addressIpRMIRegistry, false);
-        numPortRMIRegistry = Console.read("Cual es el numero de puerto por el cual escucha el rmiRegistry ?", numPortRMIRegistry, false);
+        String[] vectorDatosLocalizarNS = new String[4];//almacena la información para localizar el ns
+        vectorDatosLocalizarNS[0] = "-ORBInitialHost";
+        vectorDatosLocalizarNS[1] = Console.read("Ingrese la dirección IP donde escucha el n_s: ", "", false);
+        vectorDatosLocalizarNS[2] = "-ORBInitialPort";
+        vectorDatosLocalizarNS[3] = String.valueOf(Console.read("Ingrese el puerto donde escucha el n_s: ", 0, false));
 
         SongCopyRepository objRepository = new SongCopyRepository();
         ControllerCopySecurity objRemote = new ControllerCopySecurity(objRepository);
 
         try {
-            RegisterServer.runNS(numPortRMIRegistry);
-            RegisterServer.registerObjectRemote(objRemote, addressIpRMIRegistry, numPortRMIRegistry, "objServicioGestionCopiaCanciones");
+            RegisterServer.registerObjectRemoto(vectorDatosLocalizarNS, objRemote, "objServicioGestionCopiaCanciones");
         } catch (Exception e) {
             Console.writeJumpLine("No fue posible arrancar el ns o registrar el objeto remoto " + e.getMessage(), false);
         }

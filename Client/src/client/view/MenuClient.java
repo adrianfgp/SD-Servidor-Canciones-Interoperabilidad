@@ -1,12 +1,12 @@
 package client.view;
 
 import java.rmi.RemoteException;
-import common.entities.SongDTO;
 import common.interfaces.IControllerManageSong;
 import common.utilities.Audio;
 import common.utilities.Console;
 import common.utilities.Menu;
 import java.util.List;
+import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
 
 
 public class MenuClient extends Menu {
@@ -21,13 +21,13 @@ public class MenuClient extends Menu {
     @Override
     public void processOption() {
         switch (option) {
-            case 1 -> {
+            case 1: {
                 this.registerSong();
             }
-            case 2 -> {
+            case 2: {
                 this.showSongs();
             }
-            case 3 -> {
+            case 3: {
                 Console.writeJumpLine("Salir...", false);
             }
         }
@@ -39,8 +39,6 @@ public class MenuClient extends Menu {
             nameSong = Console.read("Ingrese el nombre de la canción a registrar (junto con su extensión): ", nameSong, false);
             SongDTO objSong = Audio.readMetaData(nameSong);
             if (objSong != null) {
-                byte[] arrayBytesSong = Audio.getBytesSong();
-                objSong.setArrayBytes(arrayBytesSong);
                 value = this.objRemoteSong.saveSong(objSong);
             }
             String messageOut = (value) ? "Registro realizado satisfactoriamente..." : "No se pudo realizar el registro";

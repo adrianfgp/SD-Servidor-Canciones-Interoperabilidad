@@ -1,11 +1,11 @@
 package server.repository;
 
-import common.entities.SongDTO;
 import common.interfaces.ISongRepository;
 import common.utilities.Audio;
 import common.utilities.Console;
 import java.util.ArrayList;
 import java.util.List;
+import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
 
 /**
  *
