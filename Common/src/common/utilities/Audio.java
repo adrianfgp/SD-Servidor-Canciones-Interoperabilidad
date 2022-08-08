@@ -1,6 +1,6 @@
 package common.utilities;
 
-import common.entities.SongDTO;
+import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +33,7 @@ public class Audio {
                 int sizeMB = (int) (file.length() / 1024);
                 String artist = tag.getFirst(FieldKey.ARTIST);
                 String title = tag.getFirst(FieldKey.TITLE);
-                objSong = new SongDTO(artist, title, sizeMB);
+                objSong = new SongDTO(0, artist, title, "mp3", sizeMB, getBytesSong());
             }
         } catch (Exception ex) {
             Console.writeJumpLine("Error al leer los métadatos del archivo", false);

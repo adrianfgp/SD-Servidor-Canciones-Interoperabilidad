@@ -58,25 +58,29 @@ public class Console {
             value = input.readLine();
             option = ((Object) chainInput).getClass().getSimpleName();
             switch (option) {
-                case "String" -> {
+                case "String": {
                     if (!isNumber(value)) {
                         chainInput = (T) String.valueOf(value.trim());
                     }
+                    break;
                 }
-                case "Double" -> {
+                case "Double": {
                     if (isNumber(value) && value.contains(".")) {
                         chainInput = (T) Double.valueOf(value.trim());
                     }
+                    break;
                 }
-                case "Float" -> {
+                case "Float": {
                     if (isNumber(value) && value.contains(".")) {
                         chainInput = (T) Float.valueOf(value.trim());
                     }
+                    break;
                 }
-                case "Integer" -> {
+                case "Integer": {
                     if (isNumber(value)) {
                         chainInput = (T) Integer.valueOf(value.trim());
                     }
+                    break;
                 }
             }
             if (isMessage) {
