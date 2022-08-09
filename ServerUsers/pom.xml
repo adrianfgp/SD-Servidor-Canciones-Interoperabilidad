@@ -14,8 +14,14 @@
     <name>ServerUsers</name>
     <description>ServerUsers</description>
     <properties>
+<<<<<<< HEAD
         <java.version>18</java.version>
          <exec.mainClass>co.edu.unicauca.serverusers</exec.mainClass>
+=======
+        <java.version>17</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+>>>>>>> main
     </properties>
     <dependencies>
         <dependency>
