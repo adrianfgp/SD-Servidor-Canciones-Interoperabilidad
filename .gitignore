@@ -1,4 +1,6 @@
 Client/target
+Client/archivoSalida.txt
+Client/cancion.mp3
 ClientAdministrator/target
 Common/target
 ServerBackup/target

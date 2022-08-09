@@ -50,62 +50,60 @@ public class MenuClient extends Menu {
     }
 
     private void registerUser() {
-
         UserDTO objUser = new UserDTO();
         boolean value = false;
         String name = "";
         String password = "";
+        String message = "";
 
-        System.out.println("\nRegistrando un nuevo Usuario");
+        Console.writeJumpLine("\nRegistrando un nuevo Usuario", false);
         name = Console.read("Ingrese el usuario: ", name, false);
         objUser.setName(name);
         password = Console.read("Ingrese la contraseña: ", password, false);
         objUser.setPassword(password);
         value = objRemoteUser.registerUser(objUser);
-        System.out.println("Usuario ingresado: "+objUser.getName() + "  " + objUser.getPassword());
-        System.out.println("respuesta "+value);
-        if (value == false) {
-            System.out.println("No se pudo registrar el usuario...\n");
-            
-        }else{
-              System.out.println("Usuario registrado con exito.\n");
-        }
-      
+        message = (value) 
+                ?  "Usuario registrado con exito.\n"
+                :  "No se pudo registrar el usuario...\n";
+        Console.writeJumpLine(message, false);
     }
 
     private void login() {
         String name = "";
         String password = "";
+        String message = "";
         UserDTO objUser = new UserDTO();
-        System.out.println("Inicio de sesion");
+        Console.writeJumpLine("Inicio de sesion", false);
         name = Console.read("Ingrese el usuario: ", name, false);
         objUser.setName(name);
         password = Console.read("Ingrese la contraseña: ", password, false);
         objUser.setPassword(password);
         TokenDTO token =  objRemoteUser.login(objUser);
-        if (token == null) {
-            System.out.println("Usuario o Contraseña no validos.");
-            return;
-        }
-        
-        System.out.println("Bienvenido: " + objUser.getName());
-        System.out.println("Su token de acceso es: "+token.getValue());
-        
+        message = (token != null) 
+                ? "Bienvenido: " + objUser.getName()+"\n"
+                + "Su token de acceso es: "+token.getValue()
+                : "Usuario o Contraseña no validos.";
+        Console.writeJumpLine(message, false);   
     }
 
     private void registerSong() {
         try {
             boolean value = false;
-            String nameSong = "";
+            String nameSong = "", token = "";
             nameSong = Console.read("Ingrese el nombre de la canción a registrar (junto con su extensión): ", nameSong, false);
+            token = Console.read("Ingrese el token de verificacion: ", token, false);
             SongDTO objSong = Audio.readMetaData(nameSong);
+            TokenDTO objToken = new TokenDTO();
+            objToken.setValue(token);
             if (objSong != null) {
-                value = this.objRemoteSong.saveSong(objSong);
+                value = this.objRemoteSong.saveSong(objSong, objToken);
             }
-            String messageOut = (value) ? "Registro realizado satisfactoriamente..." : "No se pudo realizar el registro";
+            String messageOut = (value) 
+                    ? "Registro realizado satisfactoriamente..." 
+                    : "No se pudo realizar el registro";
             Console.writeJumpLine(messageOut, false);
         } catch (RemoteException e) {
-            Console.writeJumpLine("La operación no se pudo completar, intente nuevamente...", false);
+            Console.writeJumpLine("La operación no se pudo completar, intente nuevamente..."+e.getMessage(), false);
         }
     }
 
@@ -117,9 +115,11 @@ public class MenuClient extends Menu {
                 Console.writeJumpLine("\n*** Información de las canciones ***", false);
                 for (SongDTO listSong : listSongs) {
                     Console.writeJumpLine("\nCanción No " + counter, false);
-                    Console.writeJumpLine("Titulo: " + listSong.getTitle()
+                    Console.writeJumpLine(
+                            "Titulo: " + listSong.getTitle()
                             + "\nArtista: " + listSong.getArtist()
-                            + "\nTamaño: " + listSong.getSizeMB() + "KB\n", false);
+                            + "\nTamaño: " + listSong.getSizeMB() + "KB\n", 
+                            false);
                     counter++;
                 }
             }

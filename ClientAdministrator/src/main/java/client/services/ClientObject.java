@@ -27,5 +27,6 @@ public class ClientObject {
         objRemoteAdministrator = (IControllerManageAdministrator) RegisterClient.getObjectRemote(addressIpRMIRegistry, numPortRMIRegistry, "objServicioGestionAdministradores");
         AdministratorCallback objAdminCallback = new AdministratorCallback();
         objRemoteAdministrator.saveReferenceRemoteAdministrator(objAdminCallback);
+        Console.writeJumpLine("Servidor de Notificaciones ejecutandose...", false);
     }  
 }

@@ -1,11 +1,13 @@
 package server.controllers;
 
 import common.entities.NotifyDTO;
+import common.entities.TokenDTO;
 import common.interfaces.IControllerManageSong;
 import common.interfaces.ISongRepository;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import server.services.ServerServices;
 import server.utilities.RegisterClient;
 import soap_server_backup.IControllerCopySecurity;
 import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
@@ -18,6 +20,7 @@ public class ControllerManageSong extends UnicastRemoteObject implements IContro
     private final ISongRepository objSongRepository;
     private final ControllerManageAdministrator objManageAdministrator;
     private static IControllerCopySecurity objSongCopySecurity;
+    private ServerServices objServerServices;
     private int counter;
     
     public ControllerManageSong(ISongRepository objSongRepository, ControllerManageAdministrator objManageAdministrator) throws RemoteException {
@@ -32,8 +35,9 @@ public class ControllerManageSong extends UnicastRemoteObject implements IContro
     }
     
     @Override
-    public boolean saveSong(SongDTO objSong) throws RemoteException {
-        boolean result = this.objSongRepository.saveSong(objSong);
+    public boolean saveSong(SongDTO objSong, TokenDTO objToken)throws RemoteException {
+        boolean result = false;
+        if(this.objServerServices.validToken(objToken)) result = this.objSongRepository.saveSong(objSong);
         if (result) {
             int size = this.listSong().size();
             NotifyDTO notify = new NotifyDTO(counter + 1, objSong, size);

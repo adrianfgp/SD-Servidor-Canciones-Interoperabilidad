@@ -42,9 +42,9 @@ public class UserRestController {
         return null;
     }
     
-    @GetMapping("/tokens") 
+    @PostMapping("/tokens") 
     public boolean validateToken(@RequestBody TokenDTO token) {        
-        System.out.println("Token ingresando al sistema" + token.getValue());
+       System.out.println("Token ingresando al sistema" + token.getValue());
        return this.userService.validateToken(token);
     }
        
