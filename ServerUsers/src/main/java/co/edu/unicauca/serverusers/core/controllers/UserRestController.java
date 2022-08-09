@@ -39,7 +39,7 @@ public class UserRestController {
    @GetMapping("clientes/{name}/{password}") 
     public TokenDTO login(@PathVariable("name") String name, @PathVariable("password") String password) {  
         if(this.userService.validateCredentials(name, password)){
-            this.userService.generateToken();
+            return this.userService.generateToken();
         }
         return null;
     }
