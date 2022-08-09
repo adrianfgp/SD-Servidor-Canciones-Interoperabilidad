@@ -9,12 +9,15 @@ import common.entities.UserDTO;
 import java.util.List;
 import servicios.ClienteServices;
 import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
+import utilities.Console;
 
 
 public class MenuClient extends Menu {
     private IControllerManageSong objRemoteSong;
     private ClienteServices objRemoteUser;
-    
+
+    private TokenDTO token;
+
     
     public MenuClient(String title, String [] options, IControllerManageSong objRemoteSong,ClienteServices objRemoteUser) {
         super(title, options);
@@ -44,7 +47,9 @@ public class MenuClient extends Menu {
         }
     }
     
-    private void registerUser() {
+
+    private boolean registerUser() {
+
         
             UserDTO objUser = new UserDTO();
             boolean value = false;
@@ -56,11 +61,14 @@ public class MenuClient extends Menu {
         objUser.setName(name);
         password = Console.read("Ingrese la contraseña: ", password, false);
         objUser.setPassword(password);
-        if (objRemoteUser.registerUser(objUser) == null) {
+
+        if (objRemoteUser.registerUser(objUser) == false) {
             System.out.println("No se pudo registrar el usuario...\n");
-            return;
+            return false;
         }
         System.out.println("Usuario registrado con exito.\n");
+        return true;
+
     }
     
     private void login() {
@@ -72,7 +80,8 @@ public class MenuClient extends Menu {
         objUser.setName(name);
         password = Console.read("Ingrese la contraseña: ", password, false);
         objUser.setPassword(password);
-        objUser = objRemoteUser.login(objUser);
+        token = objRemoteUser.login(objUser);
+
         if (objUser == null) {
             System.out.println("Usuario o Contraseña no validos.");
             return;
