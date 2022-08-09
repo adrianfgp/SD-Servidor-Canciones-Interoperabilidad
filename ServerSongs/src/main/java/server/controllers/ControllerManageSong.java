@@ -1,7 +1,7 @@
 package server.controllers;
 
 import common.entities.NotifyDTO;
-import interfaces.IControllerManageSong;
+import common.interfaces.IControllerManageSong;
 import common.interfaces.ISongRepository;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

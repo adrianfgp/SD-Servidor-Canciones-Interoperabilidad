@@ -4,7 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
-import common.entities.UserDTO;
 
 /**
  *
