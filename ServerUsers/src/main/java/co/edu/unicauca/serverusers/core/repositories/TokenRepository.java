@@ -24,7 +24,9 @@ public class TokenRepository {
     
     public boolean validateToken(TokenDTO token){
         for(TokenDTO tokenAux: activeTokens){
-            
+            if(tokenAux.getValue().equals(token.getValue())){
+                return true;
+            }
         }
         return false;
     }
