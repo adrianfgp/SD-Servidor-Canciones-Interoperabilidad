@@ -4,7 +4,7 @@
  */
 package co.edu.unicauca.serverusers.core.repositories;
 
-import co.edu.unicauca.serverusers.core.models.TokenDTO;
+import common.entities.TokenDTO;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 

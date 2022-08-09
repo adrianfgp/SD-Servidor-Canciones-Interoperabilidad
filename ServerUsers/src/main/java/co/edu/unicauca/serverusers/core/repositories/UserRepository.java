@@ -4,7 +4,7 @@
  */
 package co.edu.unicauca.serverusers.core.repositories;
 
-import co.edu.unicauca.serverusers.core.models.UserDTO;
+import common.entities.UserDTO;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 

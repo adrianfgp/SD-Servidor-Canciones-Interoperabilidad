@@ -1,8 +1,8 @@
 
 package co.edu.unicauca.serverusers.core.services;
 
-import co.edu.unicauca.serverusers.core.models.TokenDTO;
-import co.edu.unicauca.serverusers.core.models.UserDTO;
+import common.entities.TokenDTO;
+import common.entities.UserDTO;
 
 /**
  *

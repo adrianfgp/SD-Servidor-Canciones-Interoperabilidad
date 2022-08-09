@@ -1,10 +1,9 @@
 package co.edu.unicauca.serverusers.core.services;
 
-import co.edu.unicauca.serverusers.core.models.TokenDTO;
-import co.edu.unicauca.serverusers.core.models.UserDTO;
 import co.edu.unicauca.serverusers.core.repositories.TokenRepository;
 import co.edu.unicauca.serverusers.core.repositories.UserRepository;
-
+import common.entities.TokenDTO;
+import common.entities.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

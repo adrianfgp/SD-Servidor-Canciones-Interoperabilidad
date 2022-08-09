@@ -14,14 +14,11 @@
     <name>ServerUsers</name>
     <description>ServerUsers</description>
     <properties>
-<<<<<<< HEAD
-        <java.version>18</java.version>
-         <exec.mainClass>co.edu.unicauca.serverusers</exec.mainClass>
-=======
-        <java.version>17</java.version>
+
+        <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
->>>>>>> main
+
     </properties>
     <dependencies>
         <dependency>
@@ -39,6 +36,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>common.utilities</groupId>
+            <artifactId>Common</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

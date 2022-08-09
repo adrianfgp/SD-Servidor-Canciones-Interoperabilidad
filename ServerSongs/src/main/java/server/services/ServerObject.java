@@ -16,13 +16,19 @@ public class ServerObject {
     public static void main(String[] args) throws RemoteException {
         int numPortRMIRegistry = 0;
         String addressIpRMIRegistry = " ";
+        
+        //QUEMANDO DIRECCION Y PUERTO
+        addressIpRMIRegistry ="localhost" ;
+        numPortRMIRegistry = 2020;
+        /*
         addressIpRMIRegistry = Console.read("Cuál es la dirección ip donde se encuentra el rmiRegistry ?", addressIpRMIRegistry, false);
         numPortRMIRegistry = Console.read("Cuál es el numero de puerto por el cual escucha el rmiRegistry ?", numPortRMIRegistry, false);
+        */
         
         SongRepository objRepository = new SongRepository();
         ControllerManageAdministrator objRemoteAdministrator = new ControllerManageAdministrator();
         ControllerManageSong objRemoteSong = new ControllerManageSong(objRepository, objRemoteAdministrator);
-        objRemoteSong.getObjectRemoteServerBackup("localhost", 2022);
+        objRemoteSong.getObjectRemoteServerBackup("localhost", 3030);
         
         try {
             RegisterServer.runNS(numPortRMIRegistry);

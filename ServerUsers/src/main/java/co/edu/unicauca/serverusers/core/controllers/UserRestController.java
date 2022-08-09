@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.serverusers.core.controllers;
 
-import co.edu.unicauca.serverusers.core.models.TokenDTO;
-import co.edu.unicauca.serverusers.core.models.UserDTO;
+import common.entities.UserDTO;
 import co.edu.unicauca.serverusers.core.services.IUserService;
+import common.entities.TokenDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +24,7 @@ public class UserRestController {
     
     @PostMapping("/clientes")
     public boolean registerUser(@RequestBody UserDTO user) {
+        System.out.println("Registrar ingresando al sistema" + user.getName() + "   " + user.getPassword());
         boolean respuesta = false;
         if(!this.userService.userIsRegistred(user.getName())){
             this.userService.registerUser(user);
@@ -38,6 +35,7 @@ public class UserRestController {
     
    @GetMapping("clientes/{name}/{password}") 
     public TokenDTO login(@PathVariable("name") String name, @PathVariable("password") String password) {  
+        System.out.println("Login ingresando al sistema" + name+ "   " + password);
         if(this.userService.validateCredentials(name, password)){
             return this.userService.generateToken();
         }
@@ -46,6 +44,7 @@ public class UserRestController {
     
     @GetMapping("/tokens") 
     public boolean validateToken(@RequestBody TokenDTO token) {        
+        System.out.println("Token ingresando al sistema" + token.getValue());
        return this.userService.validateToken(token);
     }
        
