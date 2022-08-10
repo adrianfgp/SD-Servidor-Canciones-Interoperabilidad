@@ -78,5 +78,5 @@ public final class SongDTO implements org.omg.CORBA.portable.IDLEntity
     public void setArrayBytes(byte[] arrayBytes) {
         this.arrayBytes = arrayBytes;
     }
-  
+    
 } // class SongDTO

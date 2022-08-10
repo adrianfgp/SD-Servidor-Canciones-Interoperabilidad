@@ -8,18 +8,19 @@ import common.utilities.Menu;
 import common.entities.UserDTO;
 import java.util.List;
 import client.services.ClienteServices;
-import common.entities.TokenDTO;
-import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
+import common.entities.Song;
 
 public class MenuClient extends Menu {
 
     private IControllerManageSong objRemoteSong;
-    private ClienteServices objRemoteUser ;
+    private ClienteServices objRemoteUser;
+    private String token;
 
     public MenuClient(String title, String[] options, IControllerManageSong objRemoteSong, ClienteServices objRemoteUser) {
         super(title, options);
         this.objRemoteSong = objRemoteSong;
         this.objRemoteUser = objRemoteUser;
+        this.token = "";
         this.repeatedMenu();
     }
 
@@ -78,30 +79,29 @@ public class MenuClient extends Menu {
         objUser.setName(name);
         password = Console.read("Ingrese la contraseña: ", password, false);
         objUser.setPassword(password);
-        TokenDTO token =  objRemoteUser.login(objUser);
-        message = (token != null) 
+        this.token =  objRemoteUser.login(objUser);
+        message = (token != "") 
                 ? "Bienvenido: " + objUser.getName()+"\n"
-                + "Su token de acceso es: "+token.getValue()
+                + "Su token de acceso es: "+this.token
                 : "Usuario o Contraseña no validos.";
         Console.writeJumpLine(message, false);   
     }
 
     private void registerSong() {
         try {
-            boolean value = false;
-            String nameSong = "", token = "";
-            nameSong = Console.read("Ingrese el nombre de la canción a registrar (junto con su extensión): ", nameSong, false);
-            token = Console.read("Ingrese el token de verificacion: ", token, false);
-            SongDTO objSong = Audio.readMetaData(nameSong);
-            TokenDTO objToken = new TokenDTO();
-            objToken.setValue(token);
-            if (objSong != null) {
-                value = this.objRemoteSong.saveSong(objSong, objToken);
-            }
-            String messageOut = (value) 
-                    ? "Registro realizado satisfactoriamente..." 
-                    : "No se pudo realizar el registro";
-            Console.writeJumpLine(messageOut, false);
+            if(this.token != "") { 
+                boolean value = false;
+                String nameSong = "";
+                nameSong = Console.read("Ingrese el nombre de la canción a registrar (junto con su extensión): ", nameSong, false);
+                Song objSong = Audio.readMetaData(nameSong);
+                if (objSong != null) {
+                    value = this.objRemoteSong.saveSong(objSong, this.token);
+                }
+                String messageOut = (value) 
+                        ? "Registro realizado satisfactoriamente..." 
+                        : "No se pudo realizar el registro";
+                Console.writeJumpLine(messageOut, false);
+            }else Console.writeJumpLine("Debe iniciar sesion sesion para poder registrar la cancion", false);
         } catch (RemoteException e) {
             Console.writeJumpLine("La operación no se pudo completar, intente nuevamente..."+e.getMessage(), false);
         }
@@ -109,11 +109,11 @@ public class MenuClient extends Menu {
 
     private void showSongs() {
         try {
-            List<SongDTO> listSongs = this.objRemoteSong.listSong();
+            List<Song> listSongs = this.objRemoteSong.listSong();
             if (!listSongs.isEmpty()) {
                 int counter = 1;
                 Console.writeJumpLine("\n*** Información de las canciones ***", false);
-                for (SongDTO listSong : listSongs) {
+                for (Song listSong : listSongs) {
                     Console.writeJumpLine("\nCanción No " + counter, false);
                     Console.writeJumpLine(
                             "Titulo: " + listSong.getTitle()

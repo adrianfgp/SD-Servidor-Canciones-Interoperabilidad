@@ -1,6 +1,6 @@
 package server.controllers;
 
-import common.interfaces.ISongRepository;
+import server.repository.ISongCopyRepository;
 import soap_server_backup.IControllerCopySecurityPOA;
 import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
 
@@ -9,9 +9,9 @@ import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
  * @author jhonfer
  */
 public class ControllerCopySecurity extends IControllerCopySecurityPOA {
-    private final ISongRepository objCopySongs;
+    private final ISongCopyRepository objCopySongs;
     
-    public ControllerCopySecurity(ISongRepository objCopySongs) {
+    public ControllerCopySecurity(ISongCopyRepository objCopySongs) {
         this.objCopySongs = objCopySongs;
     }
     

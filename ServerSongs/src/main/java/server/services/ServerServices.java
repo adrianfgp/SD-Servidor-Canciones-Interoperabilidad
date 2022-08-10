@@ -7,7 +7,6 @@ package server.services;
 import common.entities.TokenDTO;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -25,12 +24,12 @@ public class ServerServices {
         this.endPoint = "http://localhost:6000/api";
         this.objClientePeticiones = ClientBuilder.newClient().register(new JacksonFeature());
     }
-    public boolean validToken(TokenDTO token) {
+    
+    public boolean validToken(String token) {
         boolean response = false;
-        WebTarget target = this.objClientePeticiones.target(this.endPoint +"/tokens");
-        Entity<TokenDTO> data = Entity.entity(token, MediaType.APPLICATION_JSON_TYPE);
+        WebTarget target = this.objClientePeticiones.target(this.endPoint +"/tokens/"+token);
         Builder objRequest = target.request(MediaType.APPLICATION_JSON_TYPE);
-        response = objRequest.post(data, boolean.class);
+        response = objRequest.get(boolean.class);
         return response;
     }
 }

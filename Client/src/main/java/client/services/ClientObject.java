@@ -11,11 +11,9 @@ import common.utilities.Console;
  */
 public class ClientObject {
     private static IControllerManageSong objRemoteSong;
-     private static ClienteServices objRemoteUser;
-
 
     public static void main(String[] args) {
-        objRemoteUser = new ClienteServices();
+        ClienteServices objRemoteUser = new ClienteServices();
         int numPortRMIRegistry = 0;
         String addressIpRMIRegistry = "";
         

@@ -3,6 +3,7 @@ package common.utilities;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Base64;
 
 /**
  *
@@ -108,5 +109,28 @@ public class Console {
 
     public static boolean isNumber(String chain) {
         return chain.matches("[+-]?\\d*(\\.\\d+)?");
+    }
+    
+    public static String encoder() {
+        int i = 100; // longitud
+        String theAlphaNumericS;
+        StringBuilder builder;
+        
+        theAlphaNumericS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"; 
+
+        //create the StringBuffer
+        builder = new StringBuilder(i); 
+
+        for (int m = 0; m < i; m++) { 
+            // generate numeric
+            int myindex = (int)(theAlphaNumericS.length()* Math.random()); 
+
+            // add the characters
+            builder.append(theAlphaNumericS.charAt(myindex)); 
+        }  
+        String tokenrandomichars = builder.toString();
+        
+        //Convertir en base64 y guardar en value        
+        return Base64.getEncoder().encodeToString(tokenrandomichars.getBytes());
     }
 }

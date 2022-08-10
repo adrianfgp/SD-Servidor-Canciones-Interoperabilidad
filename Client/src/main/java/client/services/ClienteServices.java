@@ -1,6 +1,5 @@
 package client.services;
 
-import common.entities.TokenDTO;
 import common.entities.UserDTO;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -29,11 +28,11 @@ public class ClienteServices {
         return respuesta;
     }
 
-    public TokenDTO login(UserDTO objUserLogin) {
-        TokenDTO objUser = null;
+    public String login(UserDTO objUserLogin) {
+        String objUser = "";
         WebTarget target = this.objClientePeticiones.target(this.endPoint + "/clientes/" + objUserLogin.getName() + "/" + objUserLogin.getPassword());
         Builder objPeticion = target.request(MediaType.APPLICATION_JSON_TYPE);
-        objUser = objPeticion.get(TokenDTO.class);
+        objUser = objPeticion.get(String.class);
         return objUser;
     }
 }

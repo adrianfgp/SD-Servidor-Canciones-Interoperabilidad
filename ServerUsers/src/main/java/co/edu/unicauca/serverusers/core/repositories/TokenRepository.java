@@ -5,6 +5,7 @@
 package co.edu.unicauca.serverusers.core.repositories;
 
 import common.entities.TokenDTO;
+import common.utilities.Console;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +15,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TokenRepository {
-    private ArrayList<TokenDTO> activeTokens = new ArrayList<TokenDTO>();
+    private ArrayList<String> activeTokens = new ArrayList<String>();
     
-    public TokenDTO generateToken(){
-        TokenDTO token = new TokenDTO();
+    public String generateToken(){
+        String token = Console.encoder();
         activeTokens.add(token);
         return  token;
     }
     
-    public boolean validateToken(TokenDTO token){
-        for(TokenDTO tokenAux: activeTokens){
-            if(tokenAux.getValue().equals(token.getValue())){
+    public boolean validateToken(String token){
+        for(String tokenAux: activeTokens){
+            if(tokenAux.equals(token)){
                 return true;
             }
         }

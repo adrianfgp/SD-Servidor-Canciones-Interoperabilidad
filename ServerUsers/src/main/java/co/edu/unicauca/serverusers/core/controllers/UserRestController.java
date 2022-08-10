@@ -34,7 +34,7 @@ public class UserRestController {
     }
     
    @GetMapping("clientes/{name}/{password}") 
-    public TokenDTO login(@PathVariable("name") String name, @PathVariable("password") String password) {  
+    public String login(@PathVariable("name") String name, @PathVariable("password") String password) {  
         System.out.println("Login ingresando al sistema" + name+ "   " + password);
         if(this.userService.validateCredentials(name, password)){
             return this.userService.generateToken();
@@ -42,9 +42,9 @@ public class UserRestController {
         return null;
     }
     
-    @PostMapping("/tokens") 
-    public boolean validateToken(@RequestBody TokenDTO token) {        
-       System.out.println("Token ingresando al sistema" + token.getValue());
+    @GetMapping("/tokens/{token}") 
+    public boolean validateToken(@PathVariable("token") String token) {        
+       System.out.println("Token ingresando al sistema" + token);
        return this.userService.validateToken(token);
     }
        

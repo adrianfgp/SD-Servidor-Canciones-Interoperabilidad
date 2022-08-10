@@ -1,6 +1,5 @@
 package server.repository;
 
-import common.interfaces.ISongRepository;
 import common.utilities.Audio;
 import common.utilities.Console;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
  *
  * @author jhonfer
  */
-public class SongCopyRepository implements ISongRepository {
+public class SongCopyRepository implements ISongCopyRepository {
     private final List<SongDTO> listCopySongs;
     private int counter;
     

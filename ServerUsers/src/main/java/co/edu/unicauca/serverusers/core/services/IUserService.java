@@ -12,6 +12,6 @@ public interface IUserService {
     public boolean userIsRegistred(String username);
     public boolean validateCredentials(String username, String password);
     public boolean registerUser(UserDTO user);
-    public TokenDTO generateToken();
-    public boolean validateToken(TokenDTO token);
+    public String generateToken();
+    public boolean validateToken(String token);
 }

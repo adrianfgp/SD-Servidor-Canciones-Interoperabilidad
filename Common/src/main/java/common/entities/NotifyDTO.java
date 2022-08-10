@@ -2,7 +2,6 @@ package common.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
 
 /**
  *
@@ -10,11 +9,11 @@ import soap_server_backup.IControllerCopySecurityPackage.SongDTO;
  */
 public class NotifyDTO implements Serializable{
     private int id;
-    private SongDTO song;
+    private Song song;
     private LocalDate date;
     private int size; 
     
-    public NotifyDTO(int id, SongDTO song, int size) {
+    public NotifyDTO(int id, Song song, int size) {
         this.id = id;
         this.song = song;
         this.date = LocalDate.now();
@@ -29,11 +28,11 @@ public class NotifyDTO implements Serializable{
         this.id = id;
     }
 
-    public SongDTO getSong() {
+    public Song getSong() {
         return song;
     }
 
-    public void setSong(SongDTO song) {
+    public void setSong(Song song) {
         this.song = song;
     }
 

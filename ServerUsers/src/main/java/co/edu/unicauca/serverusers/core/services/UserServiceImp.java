@@ -37,12 +37,12 @@ public class UserServiceImp implements IUserService{
     }
 
     @Override
-    public TokenDTO generateToken() {
+    public String generateToken() {
         return this.tokenRepository.generateToken();
     }
 
     @Override
-    public boolean validateToken(TokenDTO token) {
+    public boolean validateToken(String token) {
         return this.tokenRepository.validateToken(token);
     }
 
